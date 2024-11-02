@@ -11,7 +11,7 @@ class MongoDBHelper {
     if (!_isInitialized) {
       try {
         // MongoDB URI with TLS/SSL enabled
-        final uri = 'mongodb+srv://sankalpa5285:m2bhv447MvO8b05L@sricare.nwmoh.mongodb.net/Biomark';
+        final uri = 'mongodb+srv://p7nmini:VYSXa4vDqv1xgLRF@cluster0.uiyx5.mongodb.net/biomark';
 
         _db = await Db.create(uri);
 
@@ -62,4 +62,28 @@ class MongoDBHelper {
     if (db == null) return null;
     return await db.collection(collection).deleteOne(selector);
   }
+
+  Future<WriteResult?> updateOne(
+      String collection,
+      SelectorBuilder selector,
+      Map<String, dynamic> modification,
+      {bool upsert = false}
+      ) async {
+    try {
+      final db = await database;
+      if (db == null) return null;
+
+      return await db.collection(collection).updateOne(
+          selector,
+          modification,
+          upsert: upsert
+      );
+    } catch (e, stackTrace) {
+      print('MongoDB updateOne error: $e');
+      print('Stack trace: $stackTrace');
+      return null;
+    }
+  }
+
+
 }

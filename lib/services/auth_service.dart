@@ -249,5 +249,105 @@ class AuthService extends ChangeNotifier {
       return false;
     }
   }
+  Future<bool> changeEmail(String newEmail, String password) async {
+    try {
+      // Validate the new email format
+      if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(newEmail)) {
+        print('Invalid email format');
+        return false;
+      }
+
+      // Check if the current user is logged in
+      if (_currentUser == null) {
+        print('User is not logged in');
+        return false;
+      }
+
+      // Verify the password
+      final isValidPassword = await login(_currentUser!.email, password);
+      if (!isValidPassword) {
+        print('Invalid password');
+        return false;
+      }
+
+      // Encrypt the new email
+      final encryptedEmail = EncryptionHelper.encryptData(newEmail);
+
+      // Update the SQLite record
+      final userId = _currentUser!.id; // Get the user ID
+      if (userId != null) { // Ensure user ID is not null
+        await SQLiteHelper.instance.update(
+          'Users',
+          {'email': encryptedEmail},
+          where: 'id = ?',
+          whereArgs: [EncryptionHelper.encryptData(userId)],
+        );
+
+        // Optionally, update the email in MongoDB as well
+        await MongoDBHelper.instance.updateOne(
+          'users',
+          where.eq('dataSampleId', userId),
+          {'email': newEmail}, // Adjust if needed for encryption
+        );
+
+        // Update the current user object
+        _currentUser!.email = newEmail; // Update locally if needed
+        notifyListeners(); // Notify listeners about the change
+
+        print('Email changed successfully');
+        return true;
+      } else {
+        print('User ID is null');
+        return false;
+      }
+    } catch (e) {
+      print('Error changing email: $e');
+      return false;
+    }
+  }
+  Future<bool> changePassword(String currentPassword, String newPassword) async {
+    try {
+      // Check if the current user is logged in
+      if (_currentUser == null) {
+        print('User is not logged in');
+        return false;
+      }
+
+      // Verify the current password
+      final isValidPassword = await login(_currentUser!.email, currentPassword);
+      if (!isValidPassword) {
+        print('Current password is invalid');
+        return false;
+      }
+
+      // Generate new salt and hash for the new password
+      final newSalt = _generateSalt();
+      final newPasswordHash = _hashPassword(newPassword, newSalt);
+
+      // Update the SQLite record
+      final userId = _currentUser!.id;
+      if (userId != null) {
+        await SQLiteHelper.instance.update(
+          'Users',
+          {
+            'passwordHash': newPasswordHash,
+            'salt': newSalt,
+          },
+          where: 'id = ?',
+          whereArgs: [EncryptionHelper.encryptData(userId)],
+        );
+
+        print('Password changed successfully');
+        return true;
+      } else {
+        print('User ID is null');
+        return false;
+      }
+    } catch (e) {
+      print('Error changing password: $e');
+      return false;
+    }
+  }
+
 
 }

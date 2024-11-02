@@ -1,7 +1,7 @@
 class User {
-  final String? id;
+  String? id;
   final String fullName;
-  final String email;
+  String email;
   final String dateOfBirth;
   final String timeOfBirth;
   final String locationOfBirth;
@@ -45,6 +45,10 @@ class User {
     'height': height,
     'ethnicity': ethnicity,
     'eyeColor': eyeColor,
+    'mothersMaidenName': mothersMaidenName,
+    'childhoodFriend': childhoodFriend,
+    'childhoodPet': childhoodPet,
+    'securityQuestion': securityQuestion,
   };
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -59,11 +63,9 @@ class User {
     height: json['height'],
     ethnicity: json['ethnicity'],
     eyeColor: json['eyeColor'],
-    mothersMaidenName: '',
-    childhoodFriend: '',
-    childhoodPet: '',
-    securityQuestion: '',
+    mothersMaidenName: json['mothersMaidenName'],
+    childhoodFriend: json['childhoodFriend'],
+    childhoodPet: json['childhoodPet'],
+    securityQuestion: json['securityQuestion'],
   );
 }
-
-

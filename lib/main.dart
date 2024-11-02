@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/password_screen.dart';
+import 'screens/email_screen.dart';
+
 import 'services/auth_service.dart';
 
 void main() {
@@ -28,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/profile': (context) => ProfileScreen(),
+        '/change-email' : (context) => ChangeEmailScreen(),
+        '/change-password' : (context) => ChangePasswordScreen(),
       },
     );
   }
