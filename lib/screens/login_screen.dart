@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Animated Logo and Title
+
               TweenAnimationBuilder(
                 duration: Duration(seconds: 1),
                 tween: Tween<double>(begin: 0, end: 1),
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 40),
 
-              // Email Field with animation
+
               TweenAnimationBuilder(
                 duration: Duration(milliseconds: 800),
                 tween: Tween<Offset>(begin: Offset(-30, 0), end: Offset(0, 0)),
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 16),
 
-              // Password Field with animation
+
               TweenAnimationBuilder(
                 duration: Duration(milliseconds: 800),
                 tween: Tween<Offset>(begin: Offset(30, 0), end: Offset(0, 0)),
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(height: 16),
 
-              // Links with fade animation
+
               TweenAnimationBuilder(
                 duration: Duration(milliseconds: 800),
                 tween: Tween<double>(begin: 0, end: 1),

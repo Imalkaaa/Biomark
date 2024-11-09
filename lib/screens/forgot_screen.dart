@@ -11,14 +11,14 @@ class forgotScreen extends StatefulWidget {
 class _AccountRecoveryScreenState extends State<forgotScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _fullNameController = TextEditingController(); // Added full name controller
+  final _fullNameController = TextEditingController();
   final _mothersMaidenNameController = TextEditingController();
   final _childhoodFriendController = TextEditingController();
   final _childhoodPetController = TextEditingController();
   final _securityQuestionController = TextEditingController();
 
   String? _emailError;
-  String? _fullNameError; // Added full name error
+  String? _fullNameError;
   String? _mothersMaidenNameError;
   String? _childhoodFriendError;
   String? _childhoodPetError;
@@ -31,7 +31,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   void initState() {
     super.initState();
     _emailController.addListener(_validateForm);
-    _fullNameController.addListener(_validateForm); // Added full name listener
+    _fullNameController.addListener(_validateForm);
     _mothersMaidenNameController.addListener(_validateForm);
     _childhoodFriendController.addListener(_validateForm);
     _childhoodPetController.addListener(_validateForm);
@@ -41,14 +41,14 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   @override
   void dispose() {
     _emailController.removeListener(_validateForm);
-    _fullNameController.removeListener(_validateForm); // Added full name dispose
+    _fullNameController.removeListener(_validateForm);
     _mothersMaidenNameController.removeListener(_validateForm);
     _childhoodFriendController.removeListener(_validateForm);
     _childhoodPetController.removeListener(_validateForm);
     _securityQuestionController.removeListener(_validateForm);
 
     _emailController.dispose();
-    _fullNameController.dispose(); // Added full name dispose
+    _fullNameController.dispose();
     _mothersMaidenNameController.dispose();
     _childhoodFriendController.dispose();
     _childhoodPetController.dispose();
@@ -58,7 +58,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
 
   void _validateForm() {
     setState(() {
-      // Email validation
+
       final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
       bool isEmailValid = emailRegex.hasMatch(_emailController.text);
 
@@ -66,13 +66,13 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
           ? 'Please enter a valid email address'
           : null;
 
-      // Full name validation
+
       bool isFullNameValid = _fullNameController.text.trim().split(' ').length >= 2;
       _fullNameError = !isFullNameValid && _fullNameController.text.isNotEmpty
           ? 'Please enter your full name (first & last name)'
           : null;
 
-      // All fields should be non-empty for the form to be valid
+
       _isFormValid = isEmailValid &&
           isFullNameValid &&
           _mothersMaidenNameController.text.isNotEmpty &&
@@ -148,9 +148,9 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
     if (_formKey.currentState!.validate() && _isFormValid) {
       setState(() {
         _isLoading = true;
-        // Reset all error states
+
         _emailError = null;
-        _fullNameError = null; // Added full name error reset
+        _fullNameError = null;
         _mothersMaidenNameError = null;
         _childhoodFriendError = null;
         _childhoodPetError = null;
@@ -161,7 +161,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
         final result = await Provider.of<AuthService>(context, listen: false)
             .verifySecurityQuestions(
           email: _emailController.text,
-          fullName: _fullNameController.text, // Added full name to verification
+          fullName: _fullNameController.text,
           mothersMaidenName: _mothersMaidenNameController.text,
           childhoodFriend: _childhoodFriendController.text,
           childhoodPet: _childhoodPetController.text,
@@ -178,7 +178,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
               final errors = result['errors'] as Map<String, dynamic>;
 
               _emailError = errors['email'];
-              _fullNameError = errors['fullName']; // Added full name error handling
+              _fullNameError = errors['fullName'];
               _mothersMaidenNameError = errors['mothersMaidenName'];
               _childhoodFriendError = errors['childhoodFriend'];
               _childhoodPetError = errors['childhoodPet'];

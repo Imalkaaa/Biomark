@@ -71,7 +71,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                   ),
                 ),
                 SizedBox(height: 24),
-                // Animated container for current email
+
                 TweenAnimationBuilder(
                   duration: Duration(milliseconds: 500),
                   tween: Tween<double>(begin: 0, end: 1),
