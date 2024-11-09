@@ -36,6 +36,9 @@ dependencies:
   path: ^1.8.0
   crypto: ^3.0.1
   encrypt: ^5.0.3
+  intl: ^0.17.0
+  lottie: ^2.3.0
+  animated_text_kit: ^4.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
