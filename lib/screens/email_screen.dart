@@ -7,8 +7,9 @@ class ChangeEmailScreen extends StatefulWidget {
   _ChangeEmailScreenState createState() => _ChangeEmailScreenState();
 }
 
-class    _ChangeEmailScreenState extends State<ChangeEmailScreen> {
+class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
   final TextEditingController newEmailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   String? errorText;
 
   @override
@@ -26,15 +27,6 @@ class    _ChangeEmailScreenState extends State<ChangeEmailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 24),
-            Center(
-              child: Icon(
-                Icons.email,
-                size: 80,
-                color: Colors.blueAccent,
-              ),
-            ),
-            SizedBox(height: 16),
             Text('Current Email: ${user?.email ?? "Not available"}'),
             SizedBox(height: 16),
             TextField(
@@ -45,12 +37,18 @@ class    _ChangeEmailScreenState extends State<ChangeEmailScreen> {
               ),
               keyboardType: TextInputType.emailAddress,
             ),
+            SizedBox(height: 16),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
             SizedBox(height: 24),
             ElevatedButton(
               onPressed: () async {
                 final success = await authService.changeEmail(
                   newEmailController.text,
-                  "", // Passing empty string for password since it's no longer required
+                  passwordController.text,
                 );
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +57,7 @@ class    _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                   Navigator.pop(context);
                 } else {
                   setState(() {
-                    errorText = 'Invalid email format';
+                    errorText = 'Invalid password or email format';
                   });
                 }
               },

@@ -1,7 +1,7 @@
 class User {
-  final String? id;
+  String? id;
   final String fullName;
-        String email;
+  String email;
   final String dateOfBirth;
   final String timeOfBirth;
   final String locationOfBirth;

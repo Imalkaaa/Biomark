@@ -57,9 +57,4 @@ class SQLiteHelper {
     return await db.update(table, values, where: where, whereArgs: whereArgs);
   }
 
-  Future<int> update1(String table, Map<String, dynamic> row, String where, List<dynamic> whereArgs) async {
-    final db = await instance.database;
-    return await db.update(table, row, where: where, whereArgs: whereArgs);
-  }
-
 }

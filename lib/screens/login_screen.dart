@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
               TextButton(
                 child: Text('Forgot Password?', style: TextStyle(color: Colors.blueAccent)),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/forgot');
+                  // Implement password recovery
                 },
               ),
             ],
