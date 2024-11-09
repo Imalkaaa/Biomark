@@ -11,12 +11,14 @@ class forgotScreen extends StatefulWidget {
 class _AccountRecoveryScreenState extends State<forgotScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _fullNameController = TextEditingController(); // Added full name controller
   final _mothersMaidenNameController = TextEditingController();
   final _childhoodFriendController = TextEditingController();
   final _childhoodPetController = TextEditingController();
   final _securityQuestionController = TextEditingController();
 
   String? _emailError;
+  String? _fullNameError; // Added full name error
   String? _mothersMaidenNameError;
   String? _childhoodFriendError;
   String? _childhoodPetError;
@@ -29,6 +31,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   void initState() {
     super.initState();
     _emailController.addListener(_validateForm);
+    _fullNameController.addListener(_validateForm); // Added full name listener
     _mothersMaidenNameController.addListener(_validateForm);
     _childhoodFriendController.addListener(_validateForm);
     _childhoodPetController.addListener(_validateForm);
@@ -38,12 +41,14 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   @override
   void dispose() {
     _emailController.removeListener(_validateForm);
+    _fullNameController.removeListener(_validateForm); // Added full name dispose
     _mothersMaidenNameController.removeListener(_validateForm);
     _childhoodFriendController.removeListener(_validateForm);
     _childhoodPetController.removeListener(_validateForm);
     _securityQuestionController.removeListener(_validateForm);
 
     _emailController.dispose();
+    _fullNameController.dispose(); // Added full name dispose
     _mothersMaidenNameController.dispose();
     _childhoodFriendController.dispose();
     _childhoodPetController.dispose();
@@ -61,8 +66,15 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
           ? 'Please enter a valid email address'
           : null;
 
+      // Full name validation
+      bool isFullNameValid = _fullNameController.text.trim().split(' ').length >= 2;
+      _fullNameError = !isFullNameValid && _fullNameController.text.isNotEmpty
+          ? 'Please enter your full name (first & last name)'
+          : null;
+
       // All fields should be non-empty for the form to be valid
       _isFormValid = isEmailValid &&
+          isFullNameValid &&
           _mothersMaidenNameController.text.isNotEmpty &&
           _childhoodFriendController.text.isNotEmpty &&
           _childhoodPetController.text.isNotEmpty &&
@@ -138,6 +150,7 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
         _isLoading = true;
         // Reset all error states
         _emailError = null;
+        _fullNameError = null; // Added full name error reset
         _mothersMaidenNameError = null;
         _childhoodFriendError = null;
         _childhoodPetError = null;
@@ -148,29 +161,29 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
         final result = await Provider.of<AuthService>(context, listen: false)
             .verifySecurityQuestions(
           email: _emailController.text,
+          fullName: _fullNameController.text, // Added full name to verification
           mothersMaidenName: _mothersMaidenNameController.text,
           childhoodFriend: _childhoodFriendController.text,
           childhoodPet: _childhoodPetController.text,
           securityQuestion: _securityQuestionController.text,
         );
-        print(result);
+
         if (result['success']) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
           );
         } else {
-          // Handle specific field errors
           setState(() {
             if (result['errors'] != null) {
               final errors = result['errors'] as Map<String, dynamic>;
 
               _emailError = errors['email'];
+              _fullNameError = errors['fullName']; // Added full name error handling
               _mothersMaidenNameError = errors['mothersMaidenName'];
               _childhoodFriendError = errors['childhoodFriend'];
               _childhoodPetError = errors['childhoodPet'];
               _securityQuestionError = errors['securityQuestion'];
 
-              // If there's a general error, show it in a snackbar
               if (errors['general'] != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -200,18 +213,18 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50], // Changed from grey to light blue
+      backgroundColor: Colors.blue[50],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue[800]), // Changed from grey to dark blue
+          icon: Icon(Icons.arrow_back, color: Colors.blue[800]),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Account Recovery',
           style: TextStyle(
-            color: Colors.blue[800], // Changed from grey to dark blue
+            color: Colors.blue[800],
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -226,13 +239,12 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Instructions
                     Container(
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.blue[50], // Changed from blueGrey to light blue
+                        color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.blue[200]!), // Changed from black54 to light blue
+                        border: Border.all(color: Colors.blue[200]!),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,17 +254,17 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
-                              color: Colors.blue[900], // Changed from grey to dark blue
+                              color: Colors.blue[900],
                             ),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            '1. Enter your email address\n'
+                            '1. Enter your email address and full name\n'
                                 '2. Answer all security questions\n'
                                 '3. If answers match, you\'ll be redirected to reset your password',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.blue[700], // Changed from grey to blue
+                              color: Colors.blue[700],
                             ),
                           ),
                         ],
@@ -268,12 +280,20 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
                       keyboardType: TextInputType.emailAddress,
                     ),
 
+                    _buildInputField(
+                      controller: _fullNameController,
+                      label: 'Full Name',
+                      icon: Icons.person_outline,
+                      errorText: _fullNameError,
+                      keyboardType: TextInputType.name,
+                    ),
+
                     Text(
                       'Security Questions',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue[700], // Changed from grey to blue
+                        color: Colors.blue[700],
                       ),
                     ),
                     SizedBox(height: 16),
@@ -312,14 +332,14 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
                       height: 55,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[800], // Changed from grey to dark blue
+                          backgroundColor: Colors.blue[800],
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           elevation: 5,
-                          disabledBackgroundColor: Colors.blue[200], // Changed from grey to light blue
-                          disabledForegroundColor: Colors.blue[100], // Changed from grey to very light blue
+                          disabledBackgroundColor: Colors.blue[200],
+                          disabledForegroundColor: Colors.blue[100],
                         ),
                         child: _isLoading
                             ? CircularProgressIndicator(color: Colors.white)

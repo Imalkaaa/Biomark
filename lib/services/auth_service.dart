@@ -413,9 +413,9 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-
   Future<Map<String, dynamic>> verifySecurityQuestions({
     required String email,
+    required String fullName,
     required String mothersMaidenName,
     required String childhoodFriend,
     required String childhoodPet,
@@ -445,12 +445,14 @@ class AuthService extends ChangeNotifier {
       print('User Data: $userData');
 
       // Decrypt stored security answers for comparison
+      final storedFullName = EncryptionHelper.decryptData(userData['fullName'] as String);
       final storedMothersMaidenName = EncryptionHelper.decryptData(userData['mothersMaidenName'] as String);
       final storedChildhoodFriend = EncryptionHelper.decryptData(userData['childhoodFriend'] as String);
       final storedChildhoodPet = EncryptionHelper.decryptData(userData['childhoodPet'] as String);
       final storedSecurityQuestion = EncryptionHelper.decryptData(userData['securityQuestion'] as String);
 
       // Debugging: print decrypted answers to check if any are null
+      print('Decrypted Full Name: $storedFullName');
       print('Decrypted Mothers Maiden Name: $storedMothersMaidenName');
       print('Decrypted Childhood Friend: $storedChildhoodFriend');
       print('Decrypted Childhood Pet: $storedChildhoodPet');
@@ -458,6 +460,7 @@ class AuthService extends ChangeNotifier {
 
       // Convert all answers to lowercase for case-insensitive comparison
       final normalizedInput = {
+        'fullName': fullName.trim().toLowerCase(),
         'mothersMaidenName': mothersMaidenName.trim().toLowerCase(),
         'childhoodFriend': childhoodFriend.trim().toLowerCase(),
         'childhoodPet': childhoodPet.trim().toLowerCase(),
@@ -468,6 +471,7 @@ class AuthService extends ChangeNotifier {
       print('Normalized Input: $normalizedInput');
 
       final normalizedStored = {
+        'fullName': storedFullName.trim().toLowerCase(),
         'mothersMaidenName': storedMothersMaidenName.trim().toLowerCase(),
         'childhoodFriend': storedChildhoodFriend.trim().toLowerCase(),
         'childhoodPet': storedChildhoodPet.trim().toLowerCase(),
@@ -482,6 +486,12 @@ class AuthService extends ChangeNotifier {
       int correctAnswers = 0;
 
       // Check each field individually
+      if (normalizedInput['fullName'] == normalizedStored['fullName']) {
+        correctAnswers++;
+      } else {
+        fieldErrors['fullName'] = 'Incorrect full name';
+      }
+
       if (normalizedInput['mothersMaidenName'] == normalizedStored['mothersMaidenName']) {
         correctAnswers++;
       } else {
@@ -506,7 +516,7 @@ class AuthService extends ChangeNotifier {
         fieldErrors['securityQuestion'] = 'Incorrect answer';
       }
 
-      if (correctAnswers == 4) {
+      if (correctAnswers == 5) { // Updated to check for 5 correct answers instead of 4
         // Set the current user for the session
         final decryptedId = EncryptionHelper.decryptData(userData['id'] as String);
 
@@ -524,7 +534,7 @@ class AuthService extends ChangeNotifier {
             ...mongoUser,
             'id': decryptedId,
             'email': email,
-            'fullName': EncryptionHelper.decryptData(userData['fullName'] as String),
+            'fullName': storedFullName,
             'mothersMaidenName': storedMothersMaidenName,
             'childhoodFriend': storedChildhoodFriend,
             'childhoodPet': storedChildhoodPet,
@@ -557,7 +567,6 @@ class AuthService extends ChangeNotifier {
       };
     }
   }
-
 
 
 
