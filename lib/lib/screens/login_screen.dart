@@ -11,10 +11,10 @@ class LoginScreen extends StatelessWidget {
     final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
+      backgroundColor: Colors.blue[50], // Changed to light blue background
       appBar: AppBar(
         title: Text('Login', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blue[700], // Darker blue for app bar
         elevation: 0,
       ),
       body: Center(
@@ -23,20 +23,20 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.account_circle, color: Colors.blueAccent, size: 100),
+              Icon(Icons.account_circle, color: Colors.blue[700], size: 100), // Darker blue icon
               SizedBox(height: 20),
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.blueAccent),
+                  labelStyle: TextStyle(color: Colors.blue[700]), // Darker blue label
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
                   ),
-                  prefixIcon: Icon(Icons.email, color: Colors.blueAccent),
+                  prefixIcon: Icon(Icons.email, color: Colors.blue[700]), // Darker blue icon
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -45,21 +45,21 @@ class LoginScreen extends StatelessWidget {
                 controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.blueAccent),
+                  labelStyle: TextStyle(color: Colors.blue[700]), // Darker blue label
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide.none,
                   ),
-                  prefixIcon: Icon(Icons.lock, color: Colors.blueAccent),
+                  prefixIcon: Icon(Icons.lock, color: Colors.blue[700]), // Darker blue icon
                 ),
                 obscureText: true,
               ),
               SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent, // Updated parameter
+                  backgroundColor: Colors.blue[700], // Darker blue button
                   padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -82,15 +82,15 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               TextButton(
-                child: Text('Register', style: TextStyle(color: Colors.blueAccent)),
+                child: Text('Register', style: TextStyle(color: Colors.blue[700])), // Darker blue text
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
               ),
               TextButton(
-                child: Text('Forgot Password?', style: TextStyle(color: Colors.blueAccent)),
+                child: Text('Forgot Password?', style: TextStyle(color: Colors.blue[700])), // Darker blue text
                 onPressed: () {
-                  // Implement password recovery
+                  Navigator.pushNamed(context, '/forgot');
                 },
               ),
             ],

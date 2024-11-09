@@ -5,6 +5,9 @@ import 'screens/register_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/password_screen.dart';
 import 'screens/email_screen.dart';
+import 'screens/forgot_screen.dart';
+import 'screens/reset_screen.dart';
+
 
 import 'services/auth_service.dart';
 
@@ -33,6 +36,8 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => ProfileScreen(),
         '/change-email' : (context) => ChangeEmailScreen(),
         '/change-password' : (context) => ChangePasswordScreen(),
+        '/forgot' : (context) => forgotScreen(),
+        '/reset-password': (context) => ResetPasswordScreen(),
       },
     );
   }
