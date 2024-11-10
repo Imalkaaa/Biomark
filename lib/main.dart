@@ -20,16 +20,24 @@ void main() {
   );
 }
 
+
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       title: 'Biomark',
       theme: ThemeData(
+
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
       initialRoute: '/',
+
       routes: {
         '/': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),

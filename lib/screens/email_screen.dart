@@ -23,7 +23,6 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
       vsync: this,
       duration: Duration(milliseconds: 300),
     );
-
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -53,7 +52,8 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(height: 24),
-                // Replace static icon with animated email icon
+
+
                 Center(
                   child: TweenAnimationBuilder(
                     duration: Duration(seconds: 2),
@@ -71,6 +71,8 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                   ),
                 ),
                 SizedBox(height: 24),
+
+
 
                 TweenAnimationBuilder(
                   duration: Duration(milliseconds: 500),
@@ -115,6 +117,8 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                     );
                   },
                 ),
+
+
                 SizedBox(height: 24),
                 _buildTextField(
                   'New Email',
@@ -135,7 +139,9 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                   },
                 ),
                 SizedBox(height: 32),
-                // Animated button
+
+
+
                 ScaleTransition(
                   scale: _scaleAnimation,
                   child: ElevatedButton(
@@ -153,7 +159,6 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                         try {
                           final success = await authService.changeEmail(
                             newEmailController.text,
-                             // Empty password since we removed password field
                           );
                           if (success) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -180,6 +185,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
                         }
                       }
                     },
+
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[700],
                       padding: EdgeInsets.symmetric(vertical: 16),
@@ -212,38 +218,6 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen>
         ),
       ),
     );
-  }
 
-  Widget _buildTextField(
-      String label,
-      TextEditingController controller,
-      IconData icon, {
-        TextInputType keyboardType = TextInputType.text,
-        String? Function(String?)? validator,
-      }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      validator: validator,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: TextStyle(color: Colors.blue[700]),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide.none,
-        ),
-        prefixIcon: Icon(icon, color: Colors.blue[700]),
-        errorStyle: TextStyle(color: Colors.red[700]),
-      ),
-    );
-  }
 
-  @override
-  void dispose() {
-    newEmailController.dispose();
-    _animationController.dispose();
-    super.dispose();
-  }
 }

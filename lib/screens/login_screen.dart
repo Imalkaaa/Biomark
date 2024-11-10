@@ -8,10 +8,12 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 40),
+
 
 
               TweenAnimationBuilder(

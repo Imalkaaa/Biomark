@@ -2,6 +2,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class SQLiteHelper {
+
+
   static final SQLiteHelper instance = SQLiteHelper._init();
   static Database? _database;
 

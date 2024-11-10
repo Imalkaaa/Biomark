@@ -4,6 +4,8 @@ import '../services/auth_service.dart';
 import '../models/user.dart';
 
 class ProfileScreen extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -24,6 +26,9 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
+
+
+
       body: user == null
           ? Center(child: CircularProgressIndicator(color: Colors.blue[700]))
           : SingleChildScrollView(
@@ -75,6 +80,8 @@ class ProfileScreen extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
+
+
             SizedBox(height: 16),
             _buildInfoCard('Full Name', user.fullName, Icons.person),
             _buildInfoCard('Email', user.email, Icons.email),
@@ -86,6 +93,8 @@ class ProfileScreen extends StatelessWidget {
             _buildInfoCard('Height', user.height, Icons.height),
             _buildInfoCard('Ethnicity', user.ethnicity, Icons.diversity_3),
             _buildInfoCard('Eye Color', user.eyeColor, Icons.remove_red_eye),
+
+
             SizedBox(height: 24),
             ElevatedButton.icon(
               icon: Icon(Icons.email, color: Colors.white),
@@ -103,6 +112,8 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.pushNamed(context, '/change-email');
               },
             ),
+
+
             SizedBox(height: 16),
             ElevatedButton.icon(
               icon: Icon(Icons.lock, color: Colors.white),
@@ -116,10 +127,15 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+
+
+
               onPressed: () {
                 Navigator.pushNamed(context, '/change-password');
               },
             ),
+
+
             SizedBox(height: 16),
             ElevatedButton.icon(
               icon: Icon(Icons.no_accounts, color: Colors.white),
@@ -133,6 +149,9 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+
+
+
               onPressed: () async {
                 final confirmed = await showDialog<bool>(
                   context: context,
@@ -156,6 +175,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 );
 
+
+
                 if (confirmed == true) {
                   await authService.unsubscribe();
                   Navigator.pushReplacementNamed(context, '/');
@@ -168,13 +189,20 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
+
+
+
   Widget _buildInfoCard(String title, String content, IconData icon) {
+
+
     return Card(
       elevation: 2,
       margin: EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+
+
       child: ListTile(
         leading: Icon(icon, color: Colors.blue[700], size: 24),
         title: Text(
@@ -184,6 +212,8 @@ class ProfileScreen extends StatelessWidget {
             color: Colors.blue[700],
           ),
         ),
+
+
         subtitle: Text(
           content,
           style: TextStyle(fontSize: 16),

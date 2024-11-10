@@ -7,6 +7,8 @@ class ChangePasswordScreen extends StatefulWidget {
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
 
+
+
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController currentPasswordController = TextEditingController();
@@ -16,6 +18,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   bool _showCurrentPassword = false;
   bool _showNewPassword = false;
   bool _showConfirmPassword = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +167,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       }
                     }
                   },
+
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[700],
                     padding: EdgeInsets.symmetric(vertical: 16),
@@ -228,6 +234,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
+
+
   Widget _buildPasswordField(
       String label,
       TextEditingController controller,
@@ -236,6 +244,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       Function(bool) onVisibilityChanged, {
         String? Function(String?)? validator,
       }) {
+
+
     return TextFormField(
       controller: controller,
       obscureText: !showPassword,
@@ -261,6 +271,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ),
     );
   }
+
+
+
 
   @override
   void dispose() {

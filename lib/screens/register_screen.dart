@@ -26,6 +26,8 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
 
+
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
@@ -53,6 +55,8 @@ class RegisterScreen extends StatelessWidget {
                 if (value == null || value.length < 6) return 'Password must be at least 6 characters';
                 return null;
               }),
+
+
               _buildTextField('Date of Birth', dobController),
               _buildTextField('Time of Birth', birthTimeController),
               _buildTextField('Location of Birth', birthLocationController),
@@ -74,6 +78,9 @@ class RegisterScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
+
+
+
                 child: Text('Register', style: TextStyle(fontSize: 18, color: Colors.white)),
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
@@ -93,6 +100,8 @@ class RegisterScreen extends StatelessWidget {
                       childhoodPet: childhoodPetController.text,
                       securityQuestion: securityQuestionController.text,
                     );
+
+
 
                     final success = await authService.register(user, passwordController.text);
                     if (success) {
