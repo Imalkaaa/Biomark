@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 
+
+
 class forgotScreen extends StatefulWidget {
   @override
   _AccountRecoveryScreenState createState() => _AccountRecoveryScreenState();
 }
+
+
 
 class _AccountRecoveryScreenState extends State<forgotScreen> {
   final _formKey = GlobalKey<FormState>();
@@ -16,6 +20,8 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   final _childhoodFriendController = TextEditingController();
   final _childhoodPetController = TextEditingController();
   final _securityQuestionController = TextEditingController();
+
+
 
   String? _emailError;
   String? _fullNameError;
@@ -27,6 +33,8 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
   bool _isLoading = false;
   bool _isFormValid = false;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +45,8 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
     _childhoodPetController.addListener(_validateForm);
     _securityQuestionController.addListener(_validateForm);
   }
+
+
 
   @override
   void dispose() {
@@ -56,7 +66,9 @@ class _AccountRecoveryScreenState extends State<forgotScreen> {
     super.dispose();
   }
 
+
   void _validateForm() {
+
     setState(() {
 
       final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');

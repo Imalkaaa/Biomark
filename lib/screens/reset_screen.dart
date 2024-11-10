@@ -4,9 +4,12 @@ import '../services/auth_service.dart';
 import '../screens/profile_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
+
+
   @override
   _ResetPasswordScreenState createState() => _ResetPasswordScreenState();
 }
+
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
@@ -55,6 +58,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     });
   }
 
+
+
   Widget _buildErrorText(String? error) {
     if (error == null || error.isEmpty) return SizedBox.shrink();
     return Padding(
@@ -69,12 +74,16 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
+
+
   Widget _buildPasswordField({
     required TextEditingController controller,
     required String label,
     IconData? icon,
     String? errorText,
   }) {
+
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -116,6 +125,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
+
+
   void _handlePasswordChange() async {
     if (_formKey.currentState!.validate() && _isFormValid) {
       setState(() {
@@ -125,6 +136,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       try {
         final result = await Provider.of<AuthService>(context, listen: false)
             .resetPassword(_newPasswordController.text);
+
+
         if (result['success']) {
           setState(() {
             _isPasswordChangeSuccessful = true;
@@ -135,15 +148,21 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               MaterialPageRoute(builder: (context) => ProfileScreen()),
             );
           });
+
+
         } else {
           setState(() {
             _newPasswordError = result['error'];
           });
         }
+
+
       } catch (error) {
         setState(() {
           _newPasswordError = error.toString();
         });
+
+
       } finally {
         setState(() {
           _isLoading = false;
@@ -151,6 +170,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       }
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +193,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
         ),
       ),
+
+
+
       body: Container(
         child: SafeArea(
           child: SingleChildScrollView(
